@@ -1,3 +1,4 @@
+
 import { test, expect } from '@playwright/test';
 
 test('Главная страница открывается без ошибок', async ({ page }) => {
@@ -12,6 +13,14 @@ test('Главная страница открывается без ошибок
   page.on('pageerror', (error) => {
     errors.push(error.message);
   });
+
+  await page.route('**/api/cities', (route) =>
+    route.fulfill({ json: [] }),
+  );
+
+  await page.route('**/api/flights?*', (route) =>
+    route.fulfill({ json: [] }),
+  );
 
   await page.goto('/');
 
