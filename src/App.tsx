@@ -8,6 +8,7 @@ import {
   type FlightSearchParams,
 } from './api/flights';
 import { FlightSearchForm } from './components/FlightSearchForm';
+import { BookingPage } from './components/BookingPage';
 
 const initialParams: FlightSearchParams = {
   origin: 'MOW',
@@ -15,8 +16,11 @@ const initialParams: FlightSearchParams = {
   date: new Date().toLocaleDateString('en-CA'),
   passengers: 1,
 };
-
+const bookingMatch = window.location.pathname.match(
+  /^\/booking\/([^/]+)\/?$/,
+);
 function App() {
+  
   const [cities, setCities] = useState<City[]>([]);
   const [flights, setFlights] = useState<Flight[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +71,13 @@ function App() {
     cancelled = true;
   };
 }, []);
-
+if (bookingMatch) {
+  return (
+    <BookingPage
+      flightId={decodeURIComponent(bookingMatch[1])}
+    />
+  );
+}
   return (
     <main>
       <h1>Поиск авиабилетов</h1>

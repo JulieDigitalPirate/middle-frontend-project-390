@@ -59,3 +59,21 @@ export async function searchFlights(
 
   return response.json();
 }
+
+export async function getFlightById(
+  id: string,
+): Promise<Flight | null> {
+  const response = await fetch(
+    `/api/flights/${encodeURIComponent(id)}`,
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error('Не удалось загрузить рейс');
+  }
+
+  return response.json();
+}
