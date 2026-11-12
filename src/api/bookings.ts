@@ -53,3 +53,46 @@ export async function createBooking(
 
   return response.json();
 }
+
+export async function getBooking(
+  code: string,
+  lastName: string,
+): Promise<Booking | null> {
+  const params = new URLSearchParams({ lastName });
+
+  const response = await fetch(
+    `/api/bookings/${encodeURIComponent(code)}?${params}`,
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error('Не удалось загрузить бронирование');
+  }
+
+  return response.json();
+}
+
+export async function cancelBooking(
+  code: string,
+  lastName: string,
+): Promise<Booking> {
+  const response = await fetch(
+    `/api/bookings/${encodeURIComponent(code)}/cancel`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ lastName }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('Не удалось отменить бронирование');
+  }
+
+  return response.json();
+}

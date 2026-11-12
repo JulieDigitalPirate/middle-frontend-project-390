@@ -9,7 +9,7 @@ import {
 } from './api/flights';
 import { FlightSearchForm } from './components/FlightSearchForm';
 import { BookingPage } from './components/BookingPage';
-
+import { BookingLookupPage } from './components/BookingLookupPage';
 const initialParams: FlightSearchParams = {
   origin: 'MOW',
   destination: 'LED',
@@ -71,6 +71,9 @@ function App() {
     cancelled = true;
   };
 }, []);
+if (window.location.pathname === '/lookup') {
+  return <BookingLookupPage />;
+}
 if (bookingMatch) {
   return (
     <BookingPage
@@ -80,6 +83,12 @@ if (bookingMatch) {
 }
   return (
     <main>
+      <nav>
+      <a href="/lookup" data-testid="nav-lookup">
+        Мои брони
+      </a>
+    </nav>
+    
       <h1>Поиск авиабилетов</h1>
 
       <FlightSearchForm
