@@ -1,3 +1,11 @@
+# Flight Booking
+
+Приложение для поиска авиабилетов, оформления, просмотра и отмены бронирований.
+
+## Демо
+
+https://flight-booking-60s5.onrender.com
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
